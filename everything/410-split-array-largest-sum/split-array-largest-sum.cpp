@@ -1,42 +1,40 @@
 class Solution {
 public:
+   bool possible(int limit, int k, vector<int>& nums){
 
-    vector<vector<int>> dp;
-    vector<int> suffix;
-    int n;
+    int curr = 0;
+    int parti = 1;
 
-    int solve(int i, int k, vector<int>& nums){
+    for(int x : nums){
 
-        if(k==1)
-            return suffix[i];
-
-        if(dp[i][k]!=-1)
-            return dp[i][k];
-
-        int ans=INT_MAX;
-        int sum=0;
-
-        for(int j=i;j<=n-k;j++){
-
-            sum+=nums[j];
-
-            ans=min(ans,max(sum,solve(j+1,k-1,nums)));
+        if(curr + x <= limit){
+            curr += x;
         }
-
-        return dp[i][k]=ans;
+        else{
+            parti++;
+            curr = x;
+        }
     }
 
+    return parti <= k;
+}
     int splitArray(vector<int>& nums, int k) {
+        int lo = *max_element(nums.begin(),nums.end());
+        int hi = 0 ;
+        for(int x:nums){
+            hi+=x;
+        }
+        int ans ;
 
-        n=nums.size();
+        while(lo<=hi){
+           int  mid = lo + (hi-lo)/2 ;
 
-        suffix.resize(n+1,0);
-
-        for(int i=n-1;i>=0;i--)
-            suffix[i]=suffix[i+1]+nums[i];
-
-        dp.assign(n,vector<int>(k+1,-1));
-
-        return solve(0,k,nums);
+            if(possible(mid,k,nums)){
+                ans = mid;
+                hi = mid-1;
+            }
+            else{lo = mid+1;}
+        }
+        return ans;
     }
 };
