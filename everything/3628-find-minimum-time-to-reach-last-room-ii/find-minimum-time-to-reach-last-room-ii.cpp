@@ -5,22 +5,19 @@ public:
         int m = moveTime.size();
         int n = moveTime[0].size();
 
-        long long INF = 4e18;
+        vector<vector<int>> dist(m, vector<int>(n, INT_MAX));
 
-        vector<vector<vector<long long>>> dist(
-            m, vector<vector<long long>>(n, vector<long long>(2, INF))
-        );
-
+        // time, lastMoveCost, row, col
         priority_queue<
-            vector<long long>,
-            vector<vector<long long>>,
-            greater<vector<long long>>
+            vector<int>,
+            vector<vector<int>>,
+            greater<vector<int>>
         > pq;
 
-        dist[0][0][0] = 0;
+        dist[0][0] = 0;
 
-        // time, row, col, parity
-        pq.push({0, 0, 0, 0});
+        // previous move = 2 so first move becomes 1
+        pq.push({0,2,0,0});
 
         int dr[4] = {1,-1,0,0};
         int dc[4] = {0,0,1,-1};
@@ -30,15 +27,23 @@ public:
             auto cur = pq.top();
             pq.pop();
 
-            long long time = cur[0];
-            int row = cur[1];
-            int col = cur[2];
-            int parity = cur[3];
+            int time = cur[0];
+            int lastMove = cur[1];
+            int row = cur[2];
+            int col = cur[3];
 
-            if(time > dist[row][col][parity])
+            if(time > dist[row][col])
                 continue;
 
-            int cost = (parity == 0 ? 1 : 2);
+            if(row == m-1 && col == n-1)
+                return time;
+
+            int cost;
+
+            if(lastMove == 1)
+                cost = 2;
+            else
+                cost = 1;
 
             for(int k = 0; k < 4; k++)
             {
@@ -47,18 +52,17 @@ public:
 
                 if(nr >= 0 && nr < m && nc >= 0 && nc < n)
                 {
-                    long long newTime = max(time, (long long)moveTime[nr][nc]) + cost;
-                    int newParity = parity ^ 1;
+                    int newTime = max(time, moveTime[nr][nc]) + cost;
 
-                    if(newTime < dist[nr][nc][newParity])
+                    if(newTime < dist[nr][nc])
                     {
-                        dist[nr][nc][newParity] = newTime;
-                        pq.push({newTime, nr, nc, newParity});
+                        dist[nr][nc] = newTime;
+                        pq.push({newTime, cost, nr, nc});
                     }
                 }
             }
         }
 
-        return (int)min(dist[m-1][n-1][0], dist[m-1][n-1][1]);
+        return dist[m-1][n-1];
     }
 };
