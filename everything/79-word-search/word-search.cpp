@@ -44,7 +44,7 @@ public:
 
         vector<vector<bool>> vis(m, vector<bool>(n, false));
 
-        for(int i = 0; i < m; i++)
+        for(int i = 0e3424; i < m; i++)
         {
             for(int j = 0; j< n; j++)
             {
