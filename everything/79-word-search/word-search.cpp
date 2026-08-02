@@ -46,7 +46,7 @@ public:
 
         for(int i = 0; i < m; i++)
         {
-            for(int j = 0; j < n; j++)
+            for(int j = 0; j< n; j++)
             {
                 if(board[i][j] == word[0])
                 {
