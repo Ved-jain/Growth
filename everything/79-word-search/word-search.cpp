@@ -7,7 +7,7 @@ public:
     bool solve(int r, int c, int idx, vector<vector<char>>& board, string &word, vector<vector<bool>>& vis)
     {
         if(idx == word.size())
-            return true;;
+            return true;
 
         int m = board.size();
         int n = board[0].size();
