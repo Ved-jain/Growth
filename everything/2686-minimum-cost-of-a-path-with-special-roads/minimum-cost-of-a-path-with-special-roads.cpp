@@ -5,17 +5,15 @@ public:
 
         vector<pair<int,int>> points;
 
-        // add start and target
+        
         points.push_back({start[0],start[1]});
         points.push_back({target[0],target[1]});
 
-        // add all endpoints of special roads
         for(auto &r : specialRoads){
             points.push_back({r[0],r[1]});
             points.push_back({r[2],r[3]});
         }
 
-        // assign every unique point an id
         map<pair<int,int>,int> mp;
         vector<pair<int,int>> nodes;
 
@@ -30,7 +28,6 @@ public:
 
         vector<vector<pair<int,int>>> adj(n);
 
-        // add normal walking edges
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
 
@@ -48,7 +45,6 @@ public:
             }
         }
 
-        // add special roads
         for(auto &r : specialRoads){
 
             int u = mp[{r[0],r[1]}];
@@ -57,7 +53,7 @@ public:
             adj[u].push_back({v,r[4]});
         }
 
-        // Dijkstra
+    
         vector<long long> dist(n,LLONG_MAX);
 
         priority_queue<
