@@ -39,7 +39,7 @@ public:
 
         if (n == 0) return NULL;
 
-        ListNode* temp = lists[0];
+            ListNode* temp = lists[0];
 
         for (int i = 1; i < n; i++) {
             temp = helper(temp, lists[i]);
