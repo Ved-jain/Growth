@@ -11,7 +11,7 @@ public:
 
     bool correct(vector<int>& nums, int k) {
         int n = nums.size();
-        int prevMax = INT_MIN;
+        int prevmax = INT_MIN;
 
         for (int start = 0; start < n; start += k) {
             vector<int> a;
@@ -28,10 +28,10 @@ public:
             int mx = *max_element(a.begin(), a.end());
 
             
-            if (prevMax > mn)
+            if (prevmax > mn)
                 return false;
 
-            prevMax = mx;
+            prevmax = mx;
         }
 
         return true;
